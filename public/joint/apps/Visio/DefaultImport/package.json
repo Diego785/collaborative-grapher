@@ -1,0 +1,15 @@
+{
+  "name": "joint-visio-default-import",
+  "version": "3.7.0",
+  "description": "JointJS+ Visio Default Import",
+  "main": "index.html",
+  "scripts": {
+    "start": "node node_modules/live-server/live-server.js ../../.. --open=apps/Visio/DefaultImport/ --cors"
+  },
+  "author": "client IO",
+  "license": "http://jointjs.com/license/rappid",
+  "private": true,
+  "devDependencies": {
+    "live-server": "1.1.0"
+  }
+}

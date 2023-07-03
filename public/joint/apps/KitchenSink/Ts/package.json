@@ -1,0 +1,31 @@
+{
+  "name": "rappid-kitchen-sink",
+  "version": "3.5.0",
+  "description": "The Kitchen Sink Application for JointJS+ - Typescript version",
+  "main": "index.html",
+  "author": "client IO",
+  "license": "http://jointjs.com/license/rappid",
+  "private": true,
+  "scripts": {
+    "build": "webpack --config webpack.config.js",
+    "start": "concurrently \"npm run build\" \"webpack serve --config webpack.config.js\""
+  },
+  "dependencies": {
+    "@clientio/rappid": "file:../../../build/package/rappid.tgz",
+    "dagre": "0.8.4"
+  },
+  "devDependencies": {
+    "@types/dagre": "0.7.42",
+    "concurrently": "4.1.0",
+    "copy-webpack-plugin": "8.1.0",
+    "css-loader": "3.5.3",
+    "eslint": "8.31.0",
+    "style-loader": "1.2.1",
+    "ts-loader": "8.1.0",
+    "typescript": "3.8.3",
+    "typescript-eslint-parser": "22.0.0",
+    "webpack": "5.33.2",
+    "webpack-cli": "4.10.0",
+    "webpack-dev-server": "3.11.0"
+  }
+}

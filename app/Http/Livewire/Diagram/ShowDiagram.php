@@ -8,6 +8,7 @@ class ShowDiagram extends Component
 {
 
 
+
     public $diagramData, $receivedMessage, $message;
 
 
@@ -17,10 +18,14 @@ class ShowDiagram extends Component
     //----------------------------- SOCKETS -----------------------------------//
     public function sendMessage()
     {
+        // socket->emit('messageSent', $this->message);
+        // $this->socket()->emit('messageSent', $this->message);
+
+        // Emitir el evento 'messageSent' al servidor a través de Socket.io
         $this->emit('messageSent', $this->message);
+        $this->message = '';
         // dd('Mensaje enviado desde el cliente:', $this->message);
 
-        $this->message = '';
     }
 
     public function handleMessageReceived($message)
@@ -28,23 +33,21 @@ class ShowDiagram extends Component
         // Maneja el mensaje recibido del servidor de sockets
         // Asigna el mensaje a una propiedad de Livewire
         $this->receivedMessage = $message;
+        $this->emit('messageReceived', $message);
     }
 
     //------------------------------------------------------------------------//
 
 
-    public function updateDiagram($data)
+    public function updateDiagram()
     {
-        $this->diagramData = $data;
-    }
-
-    public function updatedDiagramData()
-    {
-        $this->dispatchBrowserEvent('updateDiagram', $this->diagramData);
+        // Emitir el evento 'updateDiagram' al servidor a través de Socket.io
+        $this->emit('updateDiagram', $this->diagramData);
     }
 
     public function mount()
     {
+        // Inicializar el diagrama y suscribirse a eventos
         $this->dispatchBrowserEvent('initializeDiagram');
     }
 
@@ -52,9 +55,6 @@ class ShowDiagram extends Component
     {
         $this->resetValidation($propertyName);
     }
-
-
-
 
     public function render()
     {

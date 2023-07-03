@@ -1,0 +1,25 @@
+@import 'css/toolbar.scss';
+
+body {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+}
+
+.yamazumi-chart {
+
+    width: 900px;
+    height: 100%;
+    margin: 10px auto;
+    display: block;
+    position: relative;
+
+    .joint-paper {
+        border: 1px solid #E2E2E2;
+        margin: 0 auto;
+
+        .stack-layout-ghost-invalid text {
+            fill: red;
+        }
+    }
+}

@@ -1,0 +1,49 @@
+/*! JointJS+ v3.7.0 - HTML5 Diagramming Framework - TRIAL VERSION
+
+Copyright (c) 2023 client IO
+
+ 2023-06-02 
+
+
+This Source Code Form is subject to the terms of the JointJS+ Trial License
+, v. 2.0. If a copy of the JointJS+ License was not distributed with this
+file, You can obtain one at https://www.jointjs.com/license
+ or from the JointJS+ archive as was distributed by client IO. See the LICENSE file.*/
+
+
+// @ts-check
+// Protractor configuration file, see link for more information
+// https://github.com/angular/protractor/blob/master/lib/config.ts
+
+const { SpecReporter, StacktraceOption } = require('jasmine-spec-reporter');
+
+/**
+ * @type { import("protractor").Config }
+ */
+exports.config = {
+  allScriptsTimeout: 11000,
+  specs: [
+    './src/**/*.e2e-spec.ts'
+  ],
+  capabilities: {
+    browserName: 'chrome'
+  },
+  directConnect: true,
+  baseUrl: 'http://localhost:4200/',
+  framework: 'jasmine',
+  jasmineNodeOpts: {
+    showColors: true,
+    defaultTimeoutInterval: 30000,
+    print: function() {}
+  },
+  onPrepare() {
+    require('ts-node').register({
+      project: require('path').join(__dirname, './tsconfig.json')
+    });
+    jasmine.getEnv().addReporter(new SpecReporter({
+      spec: {
+        displayStacktrace: StacktraceOption.PRETTY
+      }
+    }));
+  }
+};

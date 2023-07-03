@@ -1,0 +1,35 @@
+{
+  "name": "joint-kitchen-sink-react-ts",
+  "version": "3.5.0",
+  "description": "The Kitchen Sink Application for JointJS+ - React version",
+  "main": "index.html",
+  "author": "client IO",
+  "license": "http://jointjs.com/license/rappid",
+  "private": true,
+  "dependencies": {
+    "@clientio/rappid": "file:../../../build/package/rappid.tgz",
+    "dagre": "0.8.4",
+    "react": "16.6.0",
+    "react-dom": "16.6.0"
+  },
+  "scripts": {
+    "build": "webpack --config webpack.config.js",
+    "start": "concurrently \"npm run build\" \"webpack serve --config webpack.config.js\""
+  },
+  "devDependencies": {
+    "@types/dagre": "0.7.42",
+    "@types/jest": "23.3.7",
+    "@types/node": "10.12.0",
+    "@types/react": "16.4.18",
+    "@types/react-dom": "16.0.9",
+    "concurrently": "4.1.0",
+    "copy-webpack-plugin": "8.1.0",
+    "css-loader": "3.5.3",
+    "style-loader": "1.2.1",
+    "ts-loader": "8.1.0",
+    "typescript": "3.8.3",
+    "webpack": "5.33.2",
+    "webpack-cli": "4.10.0",
+    "webpack-dev-server": "3.11.0"
+  }
+}

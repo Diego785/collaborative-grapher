@@ -1,11 +1,11 @@
 import './bootstrap';
 
-import * as joint from 'jointjs';
+//import * as joint from 'jointjs';
 
-window.joint = joint;
+//window.joint = joint;
 
 import io from 'socket.io-client';
 
-const socket = io('http://localhost:3000');
+const socket = io.connect('http://localhost:3001');
 
 

@@ -1,0 +1,16 @@
+{
+  "name": "joint-kitchen-sink-vue-js",
+  "version": "3.5.0",
+  "description": "The Kitchen Sink Application for JointJS+ - VueJS version",
+  "main": "index.html",
+  "scripts": {
+    "start": "node node_modules/live-server/live-server.js ../../.. --open=apps/KitchenSink/VueJs/ --cors"
+  },
+  "author": "client IO",
+  "license": "http://jointjs.com/license/rappid",
+  "private": true,
+  "devDependencies": {
+    "live-server": "1.1.0",
+    "vue": "^2.6.11"
+  }
+}

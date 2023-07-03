@@ -1,0 +1,28 @@
+{
+  "name": "joint-kitchen-sink-vue-ts-class-style-components",
+  "version": "3.5.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build"
+  },
+  "dependencies": {
+    "@clientio/rappid": "file:../../../build/package/rappid.tgz",
+    "core-js": "^3.6.4",
+    "dagre": "0.8.4",
+    "vue": "^2.6.11",
+    "vue-class-component": "^7.2.3",
+    "vue-property-decorator": "^8.4.1"
+  },
+  "devDependencies": {
+    "@types/dagre": "0.7.42",
+    "@types/jest": "23.3.7",
+    "@vue/cli-plugin-babel": "~4.3.0",
+    "@vue/cli-plugin-typescript": "~4.3.0",
+    "@vue/cli-service": "~4.3.0",
+    "sass": "^1.26.3",
+    "sass-loader": "^8.0.2",
+    "typescript": "4.1.6",
+    "vue-template-compiler": "^2.6.11"
+  }
+}

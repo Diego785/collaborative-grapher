@@ -242,7 +242,45 @@
 
 
     <script src="{{ mix('js/app.js') }}"></script>
+
     @livewireScripts
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.1/socket.io.js"></script>
+
+    <script src="socket.io/socket.io.js"></script>
+
+    <script>
+        window.addEventListener('livewire:load', () => {
+            var socket = io('http://localhost:3001');
+
+            socket.on('connect', () => {
+                console.log('Conexión establecida');
+            });
+
+            socket.on('disconnect', () => {
+                console.log('Desconectado');
+            });
+
+            // socket.on('messageReceived', (message) => {
+            //     // Acciones a realizar cuando se reciba un mensaje
+            //     console.log('Mensaje recibido:', message);
+            // });
+
+            // socket.on('messageReceived', (message) => {
+            //     Livewire.emit('messageReceived', message);
+            // });
+
+
+            // Livewire.hook('message.processed', () => {
+            //     socket.disconnect();
+            //     socket.connect();
+            // });
+        });
+    </script>
+
+
+
+
+
 
 
     @stack('js')

@@ -14,10 +14,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [DiagramController::class, 'index'])->name('diagram');
+Route::get('/diagram/class', [DiagramController::class, 'index'])->name('diagram');
 
-Route::get('/dashboard', [DiagramController::class, 'index'])->name('diagram.dashboard');
-Route::get('/diagrams/test', [DiagramController::class, 'index'])->name('diagram.index');
+Route::get('/dashboard', [DiagramController::class, 'show'])->name('diagram.dashboard');
+Route::get('/diagrams/test', [DiagramController::class, 'show'])->name('diagram.index');
+
+Route::get('/', [DiagramController::class, 'show'])->name('diagram.kitchen-sink');
+Route::get('/show-cruds', [DiagramController::class, 'show_cruds'])->name('diagram.show-cruds');
+Route::get('/download-crud', [DiagramController::class, 'download_crud'])->name('download-crud');
 
 // Route::middleware([
 //     'auth:sanctum',

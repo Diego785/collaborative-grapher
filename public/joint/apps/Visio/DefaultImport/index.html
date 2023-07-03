@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JointJS+ Visio Default Import</title>
+    <link rel="stylesheet" type="text/css" href="../../../build/package/rappid.css">
+    <link rel="stylesheet" type="text/css" href="./css/index.css">
+</head>
+<body>
+
+    <!-- Pre-Load Fonts -->
+    <div class="font-loader" style="visibility: hidden">
+        <div style="font-family: 'Calibri', sans-serif; font-weight: 400;">Calibri 400</div>
+        <div style="font-family: 'Calibri', sans-serif; font-weight: 700;">Calibri 700</div>
+    </div>
+
+    <!-- Application -->
+    <div id="paper"></div>
+    <div id="loader"></div>
+
+
+    <!-- IE 11 Polyfills -->
+    <!-- <script src="https://polyfill.io/v3/polyfill.min.js?features=Symbol%2CMap"></script> -->
+
+    <!-- JointJS+ dependencies: -->
+    <script src="../../../node_modules/lodash/lodash.js"></script>
+    <script src="../../../node_modules/jquery/dist/jquery.js"></script>
+    <script src="../../../node_modules/backbone/backbone.js"></script>
+    <script src="../../../node_modules/jszip/dist/jszip.js"></script>
+    <script src="../../../node_modules/hot-formula-parser/dist/formula-parser.js"></script>
+    <script src="../../../build/package/rappid.js"></script>
+    <script src="../../../build/package-visio/dist/rappid-visio.js"></script>
+
+    <script src="./src/index.js"></script>
+
+    <div id="message-fs" style="display: none;">
+        <p>The application was open locally using the file protocol. It is necessary to access it trough a <strong>Web server</strong>.</p>
+        <p>Please see <a href="README.md">instructions</a>.</p>
+      </div>
+      <script>
+          (function() {
+              var fs = (document.location.protocol === 'file:');
+              if (fs) {
+                 (new joint.ui.Dialog({
+                     theme: 'material',
+                     width: 300,
+                     type: 'alert',
+                     title: 'Local File',
+                     content: $('#message-fs').show()
+                  })).open();
+              }
+          })();
+      </script>
+
+</body>
+</html>

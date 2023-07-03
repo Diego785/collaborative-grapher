@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+    <!-- Styles -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+    @livewireStyles
+
+    {{-- @vite('resources/css/app.css') --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/index.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+
+    <!-- Agrega los estilos de JointJS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jointjs/3.7.2/joint.min.css" />
+
+    <!-- Agrega los estilos personalizados si es necesario -->
+
+    <!-- Agrega cualquier otro enlace a estilos que necesites -->
+
+
+
+    <title>Collaborative Grapher</title>
+
+
+</head>
+
+
+<!-- component -->
+<!-- full tailwind config using javascript -->
+<!-- https://github.com/neurolinker/popice -->
+
+<!-- component -->
+<!-- full tailwind config using javascript -->
+<!-- https://github.com/neurolinker/popice -->
+
+<!-- component -->
+<!-- full tailwind config using javascript -->
+<!-- https://github.com/neurolinker/popice -->
+
+<body class="body bg-white dark:bg-[#0F172A]">
+    <div class="fixed w-full z-30 flex bg-white dark:bg-[#0F172A] p-2 items-center justify-center h-16 px-10">
+        <div
+            class="logo ml-12 dark:text-white  transform ease-in-out duration-500 flex-none h-full flex items-center justify-center">
+            Hecho por DHV :3
+        </div>
+        <!-- SPACER -->
+        <div class="grow h-full flex items-center justify-center"></div>
+        <div class="flex-none h-full text-center flex items-center justify-center">
+
+            <div class="flex space-x-3 items-center px-3">
+                <div class="flex-none flex justify-center">
+                    <div class="w-8 h-8 flex ">
+                        <img src="https://thumbs.dreamstime.com/b/default-avatar-profile-vector-user-profile-default-avatar-profile-vector-user-profile-profile-179376714.jpg"
+                            alt="profile" class="shadow rounded-full object-cover" />
+                    </div>
+                </div>
+                <div class="flex flex-col">
+                    <div class="hidden md:block text-sm md:text-md text-black dark:text-white">
+                        {{ auth()->user()->name }}
+                    </div>
+                    <div class="hidden md:block text-xs md:text-md text-gray-900 dark:text-gray-500">
+                        ADMIN
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <aside
+        class="w-60 -translate-x-48 fixed transition transform ease-in-out duration-1000 z-50 flex h-screen bg-[#1E293B] ">
+        <!-- open sidebar button -->
+        <div
+            class="max-toolbar translate-x-24 scale-x-0 w-full -right-6 transition transform ease-in duration-300 flex items-center justify-between border-4 border-white dark:border-[#0F172A] bg-[#1E293B]  absolute top-2 rounded-full h-12">
+
+            <div class="flex pl-4 items-center space-x-2 ">
+                <div>
+                    <div onclick="setDark('dark')"
+                        class="moon text-white hover:text-blue-500 dark:hover:text-[#38BDF8]">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3}
+                            stroke="currentColor" class="w-4 h-4">
+                            <path strokeLinecap="round" strokeLinejoin="round"
+                                d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
+                        </svg>
+                    </div>
+                    <div onclick="setDark('light')"
+                        class="sun hidden text-white hover:text-blue-500 dark:hover:text-[#38BDF8]">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="w-4 h-4">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="text-white hover:text-blue-500 dark:hover:text-[#38BDF8]">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3}
+                        stroke="currentColor" class="w-4 h-4">
+                        <path strokeLinecap="round" strokeLinejoin="round"
+                            d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
+                    </svg>
+                </div>
+            </div>
+            <div
+                class="flex items-center space-x-3 group bg-gradient-to-r dark:from-cyan-500 dark:to-blue-500 from-indigo-500 via-purple-500 to-purple-500  pl-10 pr-2 py-1 rounded-full text-white  ">
+                <div class="transform ease-in-out duration-300 mr-12">
+                    DHV
+                </div>
+            </div>
+        </div>
+        <div onclick="openNav()"
+            class="-right-6 transition transform ease-in-out duration-500 flex border-4 border-white dark:border-[#0F172A] bg-[#1E293B] dark:hover:bg-blue-500 hover:bg-purple-500 absolute top-2 p-3 rounded-full text-white hover:rotate-45">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3}
+                stroke="currentColor" class="w-4 h-4">
+                <path strokeLinecap="round" strokeLinejoin="round"
+                    d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
+            </svg>
+        </div>
+        <!-- MAX SIDEBAR-->
+        <div class="max hidden text-white mt-20 flex-col space-y-2 w-full h-[calc(100vh)]">
+
+            <div
+                class="hover:ml-4 w-full text-white hover:text-purple-500 dark:hover:text-blue-500 bg-[#1E293B] p-2 pl-8 rounded-full transform ease-in-out duration-300 flex flex-row items-center space-x-3">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+
+                    <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                          this.closest('form').submit();" type="button">
+
+                        <span :class="{ 'lg:hidden': !isSidebarOpen }"> Cerrar Sesión </span>
+                    </a>
+                </form>
+            </div>
+        </div>
+
+        <!-- MINI SIDEBAR-->
+        <div class="mini mt-20 flex flex-col space-y-2 w-full h-[calc(100vh)]">
+
+            <div
+                class="cursor-pointer hover:ml-4 justify-end pr-5 text-white hover:text-purple-500 dark:hover:text-blue-500 w-full bg-[#1E293B] p-3 rounded-full transform ease-in-out duration-300 flex">
+
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+
+
+                    <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                          this.closest('form').submit();" type="button">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+
+                    </a>
+                </form>
+            </div>
+        </div>
+
+    </aside>
+
+    <div class="flex flex-col justify-center items-center h-screen">
+
+        <div class="mx-auto">
+            @foreach ($object_class as $class)
+            <!-- component -->
+            <section class="container px-4 mx-auto">
+                <div class="sm:flex sm:items-center sm:justify-between">
+                    <div>
+                        <div class="flex items-center gap-x-3">
+                            <h2 class="text-lg font-medium text-gray-800 dark:text-white">{{ $class->name }}
+                            </h2>
+
+
+                        </div>
+                    </div>
+
+                    <div class="flex items-center mt-4 gap-x-3">
+                        <button
+                            class="flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 transition-colors duration-200 bg-white border rounded-lg gap-x-2 sm:w-auto dark:hover:bg-gray-800 dark:bg-gray-900 hover:bg-gray-100 dark:text-gray-200 dark:border-gray-700">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <g clip-path="url(#clip0_3098_154395)">
+                                    <path
+                                        d="M13.3333 13.3332L9.99997 9.9999M9.99997 9.9999L6.66663 13.3332M9.99997 9.9999V17.4999M16.9916 15.3249C17.8044 14.8818 18.4465 14.1806 18.8165 13.3321C19.1866 12.4835 19.2635 11.5359 19.0351 10.6388C18.8068 9.7417 18.2862 8.94616 17.5555 8.37778C16.8248 7.80939 15.9257 7.50052 15 7.4999H13.95C13.6977 6.52427 13.2276 5.61852 12.5749 4.85073C11.9222 4.08295 11.104 3.47311 10.1817 3.06708C9.25943 2.66104 8.25709 2.46937 7.25006 2.50647C6.24304 2.54358 5.25752 2.80849 4.36761 3.28129C3.47771 3.7541 2.70656 4.42249 2.11215 5.23622C1.51774 6.04996 1.11554 6.98785 0.935783 7.9794C0.756025 8.97095 0.803388 9.99035 1.07431 10.961C1.34523 11.9316 1.83267 12.8281 2.49997 13.5832"
+                                        stroke="currentColor" stroke-width="1.67" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </g>
+                                <defs>
+                                    <clipPath id="clip0_3098_154395">
+                                        <rect width="20" height="20" fill="white" />
+                                    </clipPath>
+                                </defs>
+                            </svg>
+
+                            <span>Reporte</span>
+                        </button>
+
+                        <button
+                            class="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-blue-600 dark:hover:bg-blue-500 dark:bg-blue-600">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="w-5 h-5">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+
+                            <span>Añadir</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="mt-6 md:flex md:items-center md:justify-between">
+                    <div
+                        class="inline-flex overflow-hidden bg-white border divide-x rounded-lg dark:bg-gray-900 rtl:flex-row-reverse dark:border-gray-700 dark:divide-gray-700">
+                        <button
+                            class="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 bg-gray-100 sm:text-sm dark:bg-gray-800 dark:text-gray-300">
+                            Ver Todo
+                        </button>
+
+                        <button
+                            class="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 sm:text-sm dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100">
+                            Primeros
+                        </button>
+
+                        <button
+                            class="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 sm:text-sm dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100">
+                            Últimos
+                        </button>
+                    </div>
+
+                    <div class="relative flex items-center mt-4 md:mt-0">
+                        <span class="absolute">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="w-5 h-5 mx-3 text-gray-400 dark:text-gray-600">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                            </svg>
+                        </span>
+
+                        <input type="text" placeholder="Search"
+                            class="block w-full py-1.5 pr-5 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-80 placeholder-gray-400/70 pl-11 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40">
+                    </div>
+                </div>
+
+                <div class="flex flex-col mt-6">
+                    <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                        <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+                            <div class="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
+                                <table class="min-w-full divide-y divide-gray-800 dark:divide-gray-700">
+                                    <thead class="bg-gray-50 dark:bg-gray-800">
+                                        <tr>
+
+
+                                            @php
+                                            $attributes = json_decode($class->attributes, true) ?? [];
+                                            @endphp
+
+                                            @for ($i = 0; $i < sizeof($attributes); $i++) <th scope="col"
+                                                class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                                <button class="flex items-center gap-x-3 focus:outline-none">
+                                                    <span>{{ $attributes[$i] }}</span>
+
+                                                    <svg class="h-3" viewBox="0 0 10 11" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path
+                                                            d="M2.13347 0.0999756H2.98516L5.01902 4.79058H3.86226L3.45549 3.79907H1.63772L1.24366 4.79058H0.0996094L2.13347 0.0999756ZM2.54025 1.46012L1.96822 2.92196H3.11227L2.54025 1.46012Z"
+                                                            fill="currentColor" stroke="currentColor"
+                                                            stroke-width="0.1" />
+                                                        <path
+                                                            d="M0.722656 9.60832L3.09974 6.78633H0.811638V5.87109H4.35819V6.78633L2.01925 9.60832H4.43446V10.5617H0.722656V9.60832Z"
+                                                            fill="currentColor" stroke="currentColor"
+                                                            stroke-width="0.1" />
+                                                        <path
+                                                            d="M8.45558 7.25664V7.40664H8.60558H9.66065C9.72481 7.40664 9.74667 7.42274 9.75141 7.42691C9.75148 7.42808 9.75146 7.42993 9.75116 7.43262C9.75001 7.44265 9.74458 7.46304 9.72525 7.49314C9.72522 7.4932 9.72518 7.49326 9.72514 7.49332L7.86959 10.3529L7.86924 10.3534C7.83227 10.4109 7.79863 10.418 7.78568 10.418C7.77272 10.418 7.73908 10.4109 7.70211 10.3534L7.70177 10.3529L5.84621 7.49332C5.84617 7.49325 5.84612 7.49318 5.84608 7.49311C5.82677 7.46302 5.82135 7.44264 5.8202 7.43262C5.81989 7.42993 5.81987 7.42808 5.81994 7.42691C5.82469 7.42274 5.84655 7.40664 5.91071 7.40664H6.96578H7.11578V7.25664V0.633865C7.11578 0.42434 7.29014 0.249976 7.49967 0.249976H8.07169C8.28121 0.249976 8.45558 0.42434 8.45558 0.633865V7.25664Z"
+                                                            fill="currentColor" stroke="currentColor"
+                                                            stroke-width="0.3" />
+                                                    </svg>
+                                                </button>
+                                                </th>
+                                                @endfor
+
+
+
+                                                <th scope="col" class="relative py-3.5 px-4">
+                                                    <span class="sr-only">Editar</span>
+                                                </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody
+                                        class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+                                        {{-- <tr>
+                                            <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
+                                                <div>
+                                                    <h2 class="font-medium text-gray-800 dark:text-white ">
+                                                        Catalog</h2>
+                                                    <p class="text-sm font-normal text-gray-600 dark:text-gray-400">
+                                                        catalogapp.io</p>
+                                                </div>
+                                            </td>
+                                            <td class="px-12 py-4 text-sm font-medium whitespace-nowrap">
+                                                <div
+                                                    class="inline px-3 py-1 text-sm font-normal rounded-full text-emerald-500 gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
+                                                    Customer
+                                                </div>
+                                            </td>
+                                            <td class="px-4 py-4 text-sm whitespace-nowrap">
+                                                <div>
+                                                    <h4 class="text-gray-700 dark:text-gray-200">Content
+                                                        curating app</h4>
+                                                    <p class="text-gray-500 dark:text-gray-400">Brings all your
+                                                        news into
+                                                        one
+                                                        place</p>
+                                                </div>
+                                            </td>
+                                            <td class="px-4 py-4 text-sm whitespace-nowrap">
+                                                <div class="flex items-center">
+                                                    <img class="object-cover w-6 h-6 -mx-1 border-2 border-white rounded-full dark:border-gray-700 shrink-0"
+                                                        src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=256&q=80"
+                                                        alt="">
+                                                    <img class="object-cover w-6 h-6 -mx-1 border-2 border-white rounded-full dark:border-gray-700 shrink-0"
+                                                        src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=256&q=80"
+                                                        alt="">
+                                                    <img class="object-cover w-6 h-6 -mx-1 border-2 border-white rounded-full dark:border-gray-700 shrink-0"
+                                                        src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1256&q=80"
+                                                        alt="">
+                                                    <img class="object-cover w-6 h-6 -mx-1 border-2 border-white rounded-full dark:border-gray-700 shrink-0"
+                                                        src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=256&q=80"
+                                                        alt="">
+                                                    <p
+                                                        class="flex items-center justify-center w-6 h-6 -mx-1 text-xs text-blue-600 bg-blue-100 border-2 border-white rounded-full">
+                                                        +4</p>
+                                                </div>
+                                            </td>
+
+                                            <td class="px-4 py-4 text-sm whitespace-nowrap">
+                                                <div class="w-48 h-1.5 bg-blue-200 overflow-hidden rounded-full">
+                                                    <div class="bg-blue-500 w-2/3 h-1.5"></div>
+                                                </div>
+                                            </td>
+
+                                            <td class="px-4 py-4 text-sm whitespace-nowrap">
+                                                <button
+                                                    class="px-1 py-1 text-gray-500 transition-colors duration-200 rounded-lg dark:text-gray-300 hover:bg-gray-100">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                                        class="w-6 h-6">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
+                                                    </svg>
+                                                </button>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
+                                                <div>
+                                                    <h2 class="font-medium text-gray-800 dark:text-white ">
+                                                        Circooles</h2>
+                                                    <p class="text-sm font-normal text-gray-600 dark:text-gray-400">
+                                                        getcirooles.com</p>
+                                                </div>
+                                            </td>
+                                            <td class="px-12 py-4 text-sm font-medium whitespace-nowrap">
+                                                <div
+                                                    class="inline px-3 py-1 text-sm font-normal text-gray-500 bg-gray-100 rounded-full dark:text-gray-400 gap-x-2 dark:bg-gray-800">
+                                                    Churned
+                                                </div>
+                                            </td>
+                                            <td class="px-4 py-4 text-sm whitespace-nowrap">
+                                                <div>
+                                                    <h4 class="text-gray-700 dark:text-gray-200">Design
+                                                        software</h4>
+                                                    <p class="text-gray-500 dark:text-gray-400">Super
+                                                        lightweight design
+                                                        app
+                                                    </p>
+                                                </div>
+                                            </td>
+                                            <td class="px-4 py-4 text-sm whitespace-nowrap">
+                                                <div class="flex items-center">
+                                                    <img class="object-cover w-6 h-6 -mx-1 border-2 border-white rounded-full dark:border-gray-700 shrink-0"
+                                                        src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=256&q=80"
+                                                        alt="">
+                                                    <img class="object-cover w-6 h-6 -mx-1 border-2 border-white rounded-full dark:border-gray-700 shrink-0"
+                                                        src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=256&q=80"
+                                                        alt="">
+                                                    <img class="object-cover w-6 h-6 -mx-1 border-2 border-white rounded-full dark:border-gray-700 shrink-0"
+                                                        src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1256&q=80"
+                                                        alt="">
+                                                    <img class="object-cover w-6 h-6 -mx-1 border-2 border-white rounded-full dark:border-gray-700 shrink-0"
+                                                        src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=256&q=80"
+                                                        alt="">
+                                                    <p
+                                                        class="flex items-center justify-center w-6 h-6 -mx-1 text-xs text-blue-600 bg-blue-100 border-2 border-white rounded-full">
+                                                        +4</p>
+                                                </div>
+                                            </td>
+
+                                            <td class="px-4 py-4 text-sm whitespace-nowrap">
+                                                <div class="w-48 h-1.5 bg-blue-200 overflow-hidden rounded-full">
+                                                    <div class="bg-blue-500 w-2/5 h-1.5"></div>
+                                                </div>
+                                            </td>
+
+                                            <td class="px-4 py-4 text-sm whitespace-nowrap">
+                                                <button
+                                                    class="px-1 py-1 text-gray-500 transition-colors duration-200 rounded-lg dark:text-gray-300 hover:bg-gray-100">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                                        class="w-6 h-6">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
+                                                    </svg>
+                                                </button>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
+                                                <div>
+                                                    <h2 class="font-medium text-gray-800 dark:text-white ">
+                                                        Sisyphus</h2>
+                                                    <p class="text-sm font-normal text-gray-600 dark:text-gray-400">
+                                                        sisyphus.com</p>
+                                                </div>
+                                            </td>
+                                            <td class="px-12 py-4 text-sm font-medium whitespace-nowrap">
+                                                <div
+                                                    class="inline px-3 py-1 text-sm font-normal rounded-full text-emerald-500 gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
+                                                    Customer
+                                                </div>
+                                            </td>
+                                            <td class="px-4 py-4 text-sm whitespace-nowrap">
+                                                <div>
+                                                    <h4 class="text-gray-700 dark:text-gray-200">Automation and
+                                                        workflow
+                                                    </h4>
+                                                    <p class="text-gray-500 dark:text-gray-400">Time tracking,
+                                                        invoicing
+                                                        and
+                                                        expenses</p>
+                                                </div>
+                                            </td>
+                                            <td class="px-4 py-4 text-sm whitespace-nowrap">
+                                                <div class="flex items-center">
+                                                    <img class="object-cover w-6 h-6 -mx-1 border-2 border-white rounded-full dark:border-gray-700 shrink-0"
+                                                        src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=256&q=80"
+                                                        alt="">
+                                                    <img class="object-cover w-6 h-6 -mx-1 border-2 border-white rounded-full dark:border-gray-700 shrink-0"
+                                                        src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=256&q=80"
+                                                        alt="">
+                                                    <img class="object-cover w-6 h-6 -mx-1 border-2 border-white rounded-full dark:border-gray-700 shrink-0"
+                                                        src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1256&q=80"
+                                                        alt="">
+                                                    <img class="object-cover w-6 h-6 -mx-1 border-2 border-white rounded-full dark:border-gray-700 shrink-0"
+                                                        src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=256&q=80"
+                                                        alt="">
+                                                    <p
+                                                        class="flex items-center justify-center w-6 h-6 -mx-1 text-xs text-blue-600 bg-blue-100 border-2 border-white rounded-full">
+                                                        +4</p>
+                                                </div>
+                                            </td>
+
+                                            <td class="px-4 py-4 text-sm whitespace-nowrap">
+                                                <div class="w-48 h-1.5 bg-blue-200 overflow-hidden rounded-full">
+                                                    <div class="bg-blue-500 w-11/12 h-1.5"></div>
+                                                </div>
+                                            </td>
+
+                                            <td class="px-4 py-4 text-sm whitespace-nowrap">
+                                                <button
+                                                    class="px-1 py-1 text-gray-500 transition-colors duration-200 rounded-lg dark:text-gray-300 hover:bg-gray-100">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                                        class="w-6 h-6">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
+                                                    </svg>
+                                                </button>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
+                                                <div>
+                                                    <h2 class="font-medium text-gray-800 dark:text-white ">
+                                                        Hourglass</h2>
+                                                    <p class="text-sm font-normal text-gray-600 dark:text-gray-400">
+                                                        hourglass.app</p>
+                                                </div>
+                                            </td>
+                                            <td class="px-12 py-4 text-sm font-medium whitespace-nowrap">
+                                                <div
+                                                    class="inline px-3 py-1 text-sm font-normal text-gray-500 bg-gray-100 rounded-full dark:text-gray-400 gap-x-2 dark:bg-gray-800">
+                                                    Churned
+                                                </div>
+                                            </td>
+                                            <td class="px-4 py-4 text-sm whitespace-nowrap">
+                                                <div>
+                                                    <h4 class="text-gray-700 dark:text-gray-200">Productivity
+                                                        app</h4>
+                                                    <p class="text-gray-500 dark:text-gray-400">Time management
+                                                        and
+                                                        productivity</p>
+                                                </div>
+                                            </td>
+                                            <td class="px-4 py-4 text-sm whitespace-nowrap">
+                                                <div class="flex items-center">
+                                                    <img class="object-cover w-6 h-6 -mx-1 border-2 border-white rounded-full dark:border-gray-700 shrink-0"
+                                                        src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=256&q=80"
+                                                        alt="">
+                                                    <img class="object-cover w-6 h-6 -mx-1 border-2 border-white rounded-full dark:border-gray-700 shrink-0"
+                                                        src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=256&q=80"
+                                                        alt="">
+                                                    <img class="object-cover w-6 h-6 -mx-1 border-2 border-white rounded-full dark:border-gray-700 shrink-0"
+                                                        src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1256&q=80"
+                                                        alt="">
+                                                    <img class="object-cover w-6 h-6 -mx-1 border-2 border-white rounded-full dark:border-gray-700 shrink-0"
+                                                        src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=256&q=80"
+                                                        alt="">
+                                                    <p
+                                                        class="flex items-center justify-center w-6 h-6 -mx-1 text-xs text-blue-600 bg-blue-100 border-2 border-white rounded-full">
+                                                        +4</p>
+                                                </div>
+                                            </td>
+
+                                            <td class="px-4 py-4 text-sm whitespace-nowrap">
+                                                <div class="w-48 h-1.5 bg-blue-200 overflow-hidden rounded-full">
+                                                    <div class="bg-blue-500 w-1/3 h-1.5"></div>
+                                                </div>
+                                            </td>
+
+                                            <td class="px-4 py-4 text-sm whitespace-nowrap">
+                                                <button
+                                                    class="px-1 py-1 text-gray-500 transition-colors duration-200 rounded-lg dark:text-gray-300 hover:bg-gray-100">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                                        class="w-6 h-6">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
+                                                    </svg>
+                                                </button>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
+                                                <div>
+                                                    <h2 class="font-medium text-gray-800 dark:text-white ">
+                                                        Quotient</h2>
+                                                    <p class="text-sm font-normal text-gray-600 dark:text-gray-400">
+                                                        quotient.co
+                                                    </p>
+                                                </div>
+                                            </td>
+                                            <td class="px-12 py-4 text-sm font-medium whitespace-nowrap">
+                                                <div
+                                                    class="inline px-3 py-1 text-sm font-normal rounded-full text-emerald-500 gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
+                                                    Customer
+                                                </div>
+                                            </td>
+                                            <td class="px-4 py-4 text-sm whitespace-nowrap">
+                                                <div>
+                                                    <h4 class="text-gray-700 dark:text-gray-200">Sales CRM</h4>
+                                                    <p class="text-gray-500 dark:text-gray-400">Web-based sales
+                                                        doc
+                                                        management
+                                                    </p>
+                                                </div>
+                                            </td>
+                                            <td class="px-4 py-4 text-sm whitespace-nowrap">
+                                                <div class="flex items-center">
+                                                    <img class="object-cover w-6 h-6 -mx-1 border-2 border-white rounded-full dark:border-gray-700 shrink-0"
+                                                        src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=256&q=80"
+                                                        alt="">
+                                                    <img class="object-cover w-6 h-6 -mx-1 border-2 border-white rounded-full dark:border-gray-700 shrink-0"
+                                                        src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=256&q=80"
+                                                        alt="">
+                                                    <img class="object-cover w-6 h-6 -mx-1 border-2 border-white rounded-full dark:border-gray-700 shrink-0"
+                                                        src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1256&q=80"
+                                                        alt="">
+                                                    <img class="object-cover w-6 h-6 -mx-1 border-2 border-white rounded-full dark:border-gray-700 shrink-0"
+                                                        src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=256&q=80"
+                                                        alt="">
+                                                    <p
+                                                        class="flex items-center justify-center w-6 h-6 -mx-1 text-xs text-blue-600 bg-blue-100 border-2 border-white rounded-full">
+                                                        +4</p>
+                                                </div>
+                                            </td>
+
+                                            <td class="px-4 py-4 text-sm whitespace-nowrap">
+                                                <div class="w-48 h-1.5 bg-blue-200 overflow-hidden rounded-full">
+                                                    <div class="bg-blue-500 w-1/6 h-1.5"></div>
+                                                </div>
+                                            </td>
+
+                                            <td class="px-4 py-4 text-sm whitespace-nowrap">
+                                                <button
+                                                    class="px-1 py-1 text-gray-500 transition-colors duration-200 rounded-lg dark:text-gray-300 hover:bg-gray-100">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                                        class="w-6 h-6">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
+                                                    </svg>
+                                                </button>
+                                            </td>
+                                        </tr> --}}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-6 sm:flex sm:items-center sm:justify-between ">
+                    <div class="text-sm text-gray-500 dark:text-gray-400">
+                        Página <span class="font-medium text-gray-700 dark:text-gray-100">1 de 10</span>
+                    </div>
+
+                    <div class="flex items-center mt-4 gap-x-4 sm:mt-0">
+                        <a href="#"
+                            class="flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md sm:w-auto gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="w-5 h-5 rtl:-scale-x-100">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18" />
+                            </svg>
+
+                            <span>
+                                Anterior
+                            </span>
+                        </a>
+
+                        <a href="#"
+                            class="flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md sm:w-auto gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800">
+                            <span>
+                                Siguiente
+                            </span>
+
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="w-5 h-5 rtl:-scale-x-100">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </section>
+            <div class="py-5 border-b border-gray-300"></div>
+            @endforeach
+
+        </div>
+    </div>
+
+
+
+    <script>
+        const sidebar = document.querySelector("aside");
+        const maxSidebar = document.querySelector(".max")
+        const miniSidebar = document.querySelector(".mini")
+        const roundout = document.querySelector(".roundout")
+        const maxToolbar = document.querySelector(".max-toolbar")
+        const logo = document.querySelector('.logo')
+        const content = document.querySelector('.content')
+        const moon = document.querySelector(".moon")
+        const sun = document.querySelector(".sun")
+
+        function setDark(val) {
+            if (val === "dark") {
+                document.documentElement.classList.add('dark')
+                moon.classList.add("hidden")
+                sun.classList.remove("hidden")
+            } else {
+                document.documentElement.classList.remove('dark')
+                sun.classList.add("hidden")
+                moon.classList.remove("hidden")
+            }
+        }
+
+        function openNav() {
+            if (sidebar.classList.contains('-translate-x-48')) {
+                // max sidebar 
+                sidebar.classList.remove("-translate-x-48")
+                sidebar.classList.add("translate-x-none")
+                maxSidebar.classList.remove("hidden")
+                maxSidebar.classList.add("flex")
+                miniSidebar.classList.remove("flex")
+                miniSidebar.classList.add("hidden")
+                maxToolbar.classList.add("translate-x-0")
+                maxToolbar.classList.remove("translate-x-24", "scale-x-0")
+                logo.classList.remove("ml-12")
+                content.classList.remove("ml-12")
+                content.classList.add("ml-12", "md:ml-60")
+            } else {
+                // mini sidebar
+                sidebar.classList.add("-translate-x-48")
+                sidebar.classList.remove("translate-x-none")
+                maxSidebar.classList.add("hidden")
+                maxSidebar.classList.remove("flex")
+                miniSidebar.classList.add("flex")
+                miniSidebar.classList.remove("hidden")
+                maxToolbar.classList.add("translate-x-24", "scale-x-0")
+                maxToolbar.classList.remove("translate-x-0")
+                logo.classList.add('ml-12')
+                content.classList.remove("ml-12", "md:ml-60")
+                content.classList.add("ml-12")
+
+            }
+
+        }
+    </script>
+
+
+    <script src="{{ mix('js/app.js') }}"></script>
+
+    @livewireScripts
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.1/socket.io.js"></script>
+
+    <script src="socket.io/socket.io.js"></script>
+
+    <script>
+        window.addEventListener('livewire:load', () => {
+            var socket = io('http://localhost:3001');
+
+            socket.on('connect', () => {
+                console.log('Conexión establecida');
+            });
+
+            socket.on('disconnect', () => {
+                console.log('Desconectado');
+            });
+
+            // socket.on('messageReceived', (message) => {
+            //     // Acciones a realizar cuando se reciba un mensaje
+            //     console.log('Mensaje recibido:', message);
+            // });
+
+            // socket.on('messageReceived', (message) => {
+            //     Livewire.emit('messageReceived', message);
+            // });
+
+
+            // Livewire.hook('message.processed', () => {
+            //     socket.disconnect();
+            //     socket.connect();
+            // });
+        });
+    </script>
+
+
+
+
+
+
+
+    @stack('js')
+
+
+
+
+
+</body>
+
+</html>
