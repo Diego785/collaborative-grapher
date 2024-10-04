@@ -7,6 +7,13 @@ use Illuminate\Support\Facades\Response;
 
 class DiagramController extends Controller
 {
+
+    // public function showDashboard()
+    // {
+    //     return view('app.show-layout');
+    // }
+
+
     public function index()
     {
         return view('my_views.diagrams.show-diagrams');

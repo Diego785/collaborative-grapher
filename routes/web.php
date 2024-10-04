@@ -14,21 +14,34 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/diagram/class', [DiagramController::class, 'index'])
+        ->name('diagram');
+});
+
+// Route::get('/', [DiagramController::class, 'showDashboard'])->name('show-layout');
+
+
 Route::get('/diagram/class', [DiagramController::class, 'index'])->name('diagram');
 
 Route::get('/dashboard', [DiagramController::class, 'show'])->name('diagram.dashboard');
 Route::get('/diagrams/test', [DiagramController::class, 'show'])->name('diagram.index');
 
+Route::middleware(['auth'])->group(function () {
+    Route::get('/', [DiagramController::class, 'show'])->name('diagram.kitchen-sink');
+});
 Route::get('/', [DiagramController::class, 'show'])->name('diagram.kitchen-sink');
 Route::get('/show-cruds', [DiagramController::class, 'show_cruds'])->name('diagram.show-cruds');
 Route::get('/download-crud', [DiagramController::class, 'download_crud'])->name('download-crud');
 
-// Route::middleware([
-//     'auth:sanctum',
-//     config('jetstream.auth_session'),
-//     'verified'
-// ])->group(function () {
-//     Route::get('/dashboard', function () {
-//         return view('dashboard');
-//     })->name('dashboard');
-// });
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+});

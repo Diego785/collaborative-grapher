@@ -11,7 +11,7 @@ class ShowCruds extends Component
 
     public function view_cruds()
     {
-        dd('show cruds');
+        // dd('show cruds');
         return redirect()->to('/show-cruds');
     }
 

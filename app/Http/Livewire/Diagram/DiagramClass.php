@@ -38,6 +38,7 @@ class DiagramClass extends Component
 
     public function open_modal_pgsql($type)
     {
+
         $this->open_modal_script_edit = false;
         $this->open_modal_script = true;
         $this->type = $type;
@@ -55,6 +56,9 @@ class DiagramClass extends Component
     }
 
 
+
+
+
     public function show_cruds()
     {
         $this->object_class = ClassObject::all();
@@ -67,6 +71,7 @@ class DiagramClass extends Component
     }
     public function updateRelation($newValue)
     {
+
         $this->emit('updateRelation', $newValue);
         $this->open_modal_relations = false;
     }
@@ -76,14 +81,14 @@ class DiagramClass extends Component
         $classForeing = ClassObject::where('code', $targetId)->first();
         
         if($classForeing == null){
-            dd('Clase nula. Guarda la clase del diagrama antes de relacionarlo.');
+            // dd('Clase nula. Guarda la clase del diagrama antes de relacionarlo.');
         }
         $foreignKey = strtolower($classForeing->name) . "_id";
 
         $classMain = ClassObject::where('code', $sourceId)->first();
 
         if($classMain == null){
-            dd('Clase nula. Guarda la clase del diagrama antes de relacionarlo.');
+            // dd('Clase nula. Guarda la clase del diagrama antes de relacionarlo.');
         }
 
 
